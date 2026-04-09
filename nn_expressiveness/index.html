@@ -1,0 +1,122 @@
+<!DOCTYPE html><html lang="en" class="scroll-smooth"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><!-- Fonts — Inter (body) + Playfair Display (headings) --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"><!-- Dark mode: apply .dark before first paint to prevent flash --><script>
+      const theme = localStorage.getItem('theme');
+      if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+      }
+    </script><title>What a Neural Network Can Actually Learn — Avinash Aldhapati</title><meta name="description" content="Experiments visualizing how width, depth, and activation functions determine the expressive power of a neural network."><meta name="author" content="Avinash Aldhapati"><!-- Open Graph --><meta property="og:title" content="What a Neural Network Can Actually Learn — Avinash Aldhapati"><meta property="og:description" content="Experiments visualizing how width, depth, and activation functions determine the expressive power of a neural network."><meta property="og:type" content="website"><meta property="og:url" content="https://blog.avinashaldhapati.com/nn_expressiveness"><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-MCC0FWPRBG"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-MCC0FWPRBG');
+    </script><link rel="stylesheet" href="/_astro/birding_and_pokemon.WskWCfRe.css"></head> <body class="min-h-screen flex flex-col"> <!--
+      Centered column keeps line lengths readable (max ~768px).
+      Perfect for long-form blog content.
+    --> <div class="mx-auto w-full max-w-3xl px-6 md:px-8 flex flex-col min-h-screen"> <header class="pt-10 pb-8 md:pt-14 md:pb-10"> <nav class="flex flex-col sm:flex-row justify-between items-start sm:items-baseline gap-4"> <!-- Blog name — links to blog home --> <a href="/" class="font-serif text-2xl md:text-3xl tracking-tight text-text hover:opacity-70 transition-opacity">
+Avinash's Blog
+</a> <!-- Right side: nav links + separated toggle --> <div class="flex items-baseline gap-5"> <ul class="flex items-baseline gap-6 text-sm text-text-secondary"> <li> <a href="/" class="link-underline transition-colors hover:text-text">
+all posts
+</a> </li> <li> <a href="https://avinashaldhapati.com" class="link-underline transition-colors hover:text-text">
+portfolio &nearr;
+</a> </li> </ul> <!-- Vertical separator + dark mode toggle --> <span class="hidden sm:block w-px h-4 bg-border"></span> <button id="theme-toggle" class="text-text-tertiary hover:text-text transition-colors cursor-pointer leading-none" aria-label="Toggle dark mode"> <!-- Sun icon (visible in dark mode — click to switch to light) --> <svg id="theme-icon-sun" class="hidden w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"> <circle cx="12" cy="12" r="5"></circle> <line x1="12" y1="1" x2="12" y2="3"></line> <line x1="12" y1="21" x2="12" y2="23"></line> <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line> <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line> <line x1="1" y1="12" x2="3" y2="12"></line> <line x1="21" y1="12" x2="23" y2="12"></line> <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line> <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line> </svg> <!-- Moon icon (visible in light mode — click to switch to dark) --> <svg id="theme-icon-moon" class="hidden w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"> <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path> </svg> </button> </div> </nav> </header> <!-- Dark mode toggle script --> <script type="module">function o(){const e=document.documentElement.classList.contains("dark"),t=document.getElementById("theme-icon-sun"),n=document.getElementById("theme-icon-moon");t&&n&&(t.classList.toggle("hidden",!e),n.classList.toggle("hidden",e))}o();document.getElementById("theme-toggle")?.addEventListener("click",()=>{const e=document.documentElement.classList.toggle("dark");localStorage.setItem("theme",e?"dark":"light"),o()});</script> <main class="flex-grow py-16 md:py-24">  <article> <!-- Breadcrumb --> <nav class="text-sm text-text-tertiary mb-12" aria-label="Breadcrumb"> <a href="/" class="hover:text-text transition-colors">Home</a> <span class="mx-2">/</span> <span class="text-text-secondary">What a Neural Network Can Actually Learn</span> </nav> <!-- Title --> <header class="mb-12"> <h1 class="font-serif text-4xl md:text-5xl lg:text-6xl leading-tight tracking-tight mb-4"> What a Neural Network Can Actually Learn </h1> <!-- Meta row --> <div class="flex flex-wrap gap-x-6 gap-y-2 text-sm text-text-tertiary"> <span>April 9, 2026</span> <span>Avinash Aldhapati</span> <div class="flex gap-2"> <span class="text-xs border border-border px-2 py-0.5 rounded-full">Technical</span><span class="text-xs border border-border px-2 py-0.5 rounded-full">ML</span><span class="text-xs border border-border px-2 py-0.5 rounded-full">Python</span> </div> </div> </header> <!-- Abstract --> <div class="border-l-2 border-text pl-6 mb-16 text-text-secondary leading-relaxed max-w-2xl"> Experiments visualizing how width, depth, and activation functions determine the expressive power of a neural network — and why deep-but-narrow is more broken than you&#39;d expect. </div> <!-- Content — the <slot /> receives the page-specific markup --> <div class="prose max-w-none mb-20 text-text-secondary leading-relaxed space-y-6">  <section class="mb-12"> <h2 class="font-serif text-2xl mb-4">The Question</h2> <p class="mb-4">
+When people say a neural network is "learning" something, what does that mean geometrically?
+        Not in the abstract — what is the actual shape of the function it's producing?
+</p> <p class="mb-4">
+I'd read the explanations: more layers means more composition, more neurons means more
+        capacity, ReLU activations produce piecewise-linear functions. But I wanted to <em>see</em> it.
+        Watch a network fail to fit a curve because it doesn't have enough neurons. Watch a deep-but-narrow
+        network collapse to a flat line. Compare them side by side, training in real time.
+</p> <p>
+So I built a set of visualisations in Python and PyTorch to do exactly that.
+</p> </section> <section class="mb-12"> <h2 class="font-serif text-2xl mb-4">The Target Curve</h2> <p class="mb-4">
+All the experiments try to fit the same target:
+</p> <pre class="bg-surface-light dark:bg-surface-dark rounded p-4 font-mono text-sm mb-4 overflow-x-auto">y = sin(x) + 0.5·sin(3x) + 0.3·cos(5x)</pre> <p class="mb-4">
+This is a superposition of three sine/cosine waves at different frequencies. It's smooth
+        enough to be learnable, but wiggly enough that a weak network can't fake it. It's a standard
+        toy regression target that makes architectural differences immediately visible.
+</p> <p>
+200 evenly-spaced points from x = −3 to x = 3. No noise added — the challenge is purely
+        model capacity, not data quality.
+</p> </section> <section class="mb-12"> <h2 class="font-serif text-2xl mb-4">Experiment 1: Width vs Depth</h2> <p class="mb-4">
+The first experiment trains four architectures simultaneously on the same data, with a live
+        animation showing each network's prediction curve evolving in real time alongside a shared
+        loss plot:
+</p> <ul class="list-disc list-inside space-y-2 text-text-secondary mb-6"> <li><strong class="text-text">1 neuron, 1 layer</strong> — essentially a single bent line</li> <li><strong class="text-text">8 neurons, 1 layer</strong> — shallow but wide</li> <li><strong class="text-text">1 neuron, 3 layers</strong> — deep but narrow</li> <li><strong class="text-text">8 neurons, 3 layers</strong> — deep and wide</li> </ul> <p class="mb-4">
+The results were mostly what I expected — except for one thing.
+</p> <p class="mb-4">
+The <strong>deep-but-narrow</strong> network (1 neuron × 3 layers) was the worst performer by
+        far — worse even than the single neuron. It barely moved from a flat line across the entire
+        training run. Intuitively this makes sense: each layer is a single scalar transformation, so
+        the whole chain is just a sequence of bent lines stacked on a single value. You can compose
+        functions all you like, but if the signal is a single number at every layer, you can't
+        represent anything complex.
+</p> <p class="mb-4">
+The <strong>shallow-and-wide</strong> network (8 neurons × 1 layer) did surprisingly well —
+        it captured the broad shape of the curve early, even if it couldn't nail the high-frequency
+        wiggles. Width gives you parallel basis functions that sum together. One layer of 8 ReLUs
+        can produce 8 different "bent line" pieces that, weighted correctly, approximate smooth bumps.
+</p> <p>
+The <strong>deep-and-wide</strong> winner (8 neurons × 3 layers) didn't actually converge
+        much better than the shallow-wide version given the training time — but the composition of
+        multiple nonlinear layers means it <em>could</em> represent more complex relationships with
+        more epochs. The loss curve told the real story: it descended fastest and most consistently.
+</p> </section> <section class="mb-12"> <h2 class="font-serif text-2xl mb-4">Experiment 2: Activation Functions</h2> <p class="mb-4">
+The second experiment lets you define any architecture — layers, neuron counts, and
+        activation function per layer — and watch it learn with a three-panel view: live prediction,
+        loss curve, and a static block diagram of the architecture.
+</p> <p class="mb-4">
+The supported activations are ReLU, Tanh, Sigmoid, LeakyReLU, ELU, GELU, and identity
+        (no activation). GELU is the one used in most modern transformer architectures (BERT, GPT).
+</p> <p class="mb-4">
+The most striking thing I noticed: <strong>switching from ReLU to GELU made convergence
+        noticeably smoother on this task.</strong> ReLU networks had a tendency to plateau early and
+        then jump — the loss curve had a jagged, stepped character. GELU curves descended more
+        steadily. This matches what I'd read about GELU's smooth gradient near zero making
+        optimisation more stable.
+</p> <p>
+Sigmoid was the worst. It saturates badly — the gradients vanish for neurons that are very
+        positive or very negative, which stalls learning. The loss curve barely moved for the first
+        half of training.
+</p> </section> <section class="mb-12"> <h2 class="font-serif text-2xl mb-4">Experiment 3: Peering Inside Layer by Layer</h2> <p class="mb-4">
+The third experiment is the most conceptually interesting. Instead of showing the final
+        output, it renders one panel per hidden layer, each showing the activations of that layer's
+        neurons as a function of x.
+</p> <p class="mb-4">
+The mental model it forces:
+</p> <pre class="bg-surface-light dark:bg-surface-dark rounded p-4 font-mono text-sm mb-4 overflow-x-auto">output = L4( L3( L2( L1( x ) ) ) )</pre> <p class="mb-4">
+Each layer is a function. Each panel shows what that function currently looks like across
+        the input range. You watch the network building up a representation step by step — Layer 1
+        learns something crude, Layer 2 transforms that into something more structured, and so on.
+</p> <p class="mb-4">
+With 1-neuron layers (the deep-but-narrow case), each panel is a single line. You can see
+        exactly why it fails — each transformation is still one-dimensional, so composing four of
+        them doesn't add capacity, it just reshapes a flat curve.
+</p> <p>
+With 4-neuron layers, each panel shows 4 colored lines — one per neuron. You can watch the
+        parallel neurons specialising over training: one might learn to activate on the left side of
+        the domain, another on the right, another near the centre. The final output is a weighted
+        sum of whatever the last layer produces — essentially a learned basis decomposition.
+</p> </section> <section> <h2 class="font-serif text-2xl mb-4">What I Actually Learned</h2> <p class="mb-4">
+The most useful thing wasn't any specific result — it was having a direct visual channel
+        to what the network is doing. Watching the loss curve plateau and then break free, or seeing
+        a layer's activations suddenly reorganise during training, makes the abstract math feel
+        grounded.
+</p> <p class="mb-4">
+Two things I'll carry forward:
+</p> <ul class="list-disc list-inside space-y-2 text-text-secondary mb-4"> <li> <strong class="text-text">Width before depth</strong> — for a fixed parameter budget, shallow-and-wide
+          often outperforms deep-and-narrow on smooth regression tasks. Composition without width is
+          just a chain of scalar reshapings.
+</li> <li> <strong class="text-text">GELU for smooth problems</strong> — the smoother gradient profile genuinely
+          helps on toy regression. It doesn't matter for simple tasks, but I'd default to GELU now
+          for anything where I want stable convergence.
+</li> </ul> <p>
+Next I want to run the same experiments on a classification boundary instead of a regression
+        curve — to see how decision boundaries evolve during training in the same frame-by-frame way.
+</p> </section>  </div> <!-- Bottom navigation --> <div class="pt-8 border-t border-border flex items-center justify-between text-sm"> <a href="/" class="link-underline text-text-secondary hover:text-text transition-colors">
+&larr; All posts
+</a> </div> </article>  </main> <footer class="py-10 border-t border-border"> <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 text-sm text-text-tertiary"> <!-- Links --> <div class="flex gap-5"> <a href="https://github.com/deep0ctave" target="_blank" rel="noopener noreferrer" class="hover:text-text transition-colors">
+GitHub
+</a> <a href="https://www.linkedin.com/in/avinash-aldhapati/" target="_blank" rel="noopener noreferrer" class="hover:text-text transition-colors">
+LinkedIn
+</a> <a href="https://avinashaldhapati.com" class="hover:text-text transition-colors">
+Portfolio
+</a> </div> <!-- Copyright --> <p>&copy; 2026 Avinash Aldhapati</p> </div> </footer> </div> </body></html>
