@@ -1,0 +1,188 @@
+<!DOCTYPE html><html lang="en" class="scroll-smooth"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><!-- Fonts — Inter (body) + Playfair Display (headings) --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"><!-- Dark mode: apply .dark before first paint to prevent flash --><script>
+      const theme = localStorage.getItem('theme');
+      if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+      }
+    </script><title>The Number That Fits Too Well — Avinash Aldhapati</title><meta name="description" content="Your CPU represents numbers in a format mostly unchanged since 1985. Posits are a 2017 proposal to do it smarter. Here is the bit-by-bit comparison."><meta name="author" content="Avinash Aldhapati"><!-- Open Graph --><meta property="og:title" content="The Number That Fits Too Well — Avinash Aldhapati"><meta property="og:description" content="Your CPU represents numbers in a format mostly unchanged since 1985. Posits are a 2017 proposal to do it smarter. Here is the bit-by-bit comparison."><meta property="og:type" content="website"><meta property="og:url" content="https://blog.avinashaldhapati.com/posit_number_format"><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-MCC0FWPRBG"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-MCC0FWPRBG');
+    </script><link rel="stylesheet" href="/_astro/birding_and_pokemon.DxMHhzR1.css"></head> <body class="min-h-screen flex flex-col"> <!--
+      Centered column keeps line lengths readable (max ~768px).
+      Perfect for long-form blog content.
+    --> <div class="mx-auto w-full max-w-3xl px-6 md:px-8 flex flex-col min-h-screen"> <header class="pt-10 pb-8 md:pt-14 md:pb-10"> <nav class="flex flex-col sm:flex-row justify-between items-start sm:items-baseline gap-4"> <!-- Blog name — links to blog home --> <a href="/" class="font-serif text-2xl md:text-3xl tracking-tight text-text hover:opacity-70 transition-opacity">
+Avinash's Blog
+</a> <!-- Right side: nav links + separated toggle --> <div class="flex items-baseline gap-5"> <ul class="flex items-baseline gap-6 text-sm text-text-secondary"> <li> <a href="/" class="link-underline transition-colors hover:text-text">
+all posts
+</a> </li> <li> <a href="https://avinashaldhapati.com" class="link-underline transition-colors hover:text-text">
+portfolio &nearr;
+</a> </li> </ul> <!-- Vertical separator + dark mode toggle --> <span class="hidden sm:block w-px h-4 bg-border"></span> <button id="theme-toggle" class="text-text-tertiary hover:text-text transition-colors cursor-pointer leading-none" aria-label="Toggle dark mode"> <!-- Sun icon (visible in dark mode — click to switch to light) --> <svg id="theme-icon-sun" class="hidden w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"> <circle cx="12" cy="12" r="5"></circle> <line x1="12" y1="1" x2="12" y2="3"></line> <line x1="12" y1="21" x2="12" y2="23"></line> <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line> <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line> <line x1="1" y1="12" x2="3" y2="12"></line> <line x1="21" y1="12" x2="23" y2="12"></line> <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line> <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line> </svg> <!-- Moon icon (visible in light mode — click to switch to dark) --> <svg id="theme-icon-moon" class="hidden w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"> <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path> </svg> </button> </div> </nav> </header> <!-- Dark mode toggle script --> <script type="module">function o(){const e=document.documentElement.classList.contains("dark"),t=document.getElementById("theme-icon-sun"),n=document.getElementById("theme-icon-moon");t&&n&&(t.classList.toggle("hidden",!e),n.classList.toggle("hidden",e))}o();document.getElementById("theme-toggle")?.addEventListener("click",()=>{const e=document.documentElement.classList.toggle("dark");localStorage.setItem("theme",e?"dark":"light"),o()});</script> <main class="flex-grow py-16 md:py-24">  <article> <!-- Breadcrumb --> <nav class="text-sm text-text-tertiary mb-12" aria-label="Breadcrumb"> <a href="/" class="hover:text-text transition-colors">Home</a> <span class="mx-2">/</span> <span class="text-text-secondary">The Number That Fits Too Well</span> </nav> <!-- Title --> <header class="mb-12"> <h1 class="font-serif text-4xl md:text-5xl lg:text-6xl leading-tight tracking-tight mb-4"> The Number That Fits Too Well </h1> <!-- Meta row --> <div class="flex flex-wrap gap-x-6 gap-y-2 text-sm text-text-tertiary"> <span>April 16, 2026</span> <span>Avinash Aldhapati</span> <div class="flex gap-2"> <span class="text-xs border border-border px-2 py-0.5 rounded-full">Technical</span><span class="text-xs border border-border px-2 py-0.5 rounded-full">Numerics</span><span class="text-xs border border-border px-2 py-0.5 rounded-full">Hardware</span> </div> </div> </header> <!-- Abstract --> <div class="border-l-2 border-text pl-6 mb-16 text-text-secondary leading-relaxed max-w-2xl"> Your CPU represents numbers in a format mostly unchanged since 1985. Posits are a 2017 proposal to do it smarter — variable precision, fewer wasted bits, a cleaner number line. Here&#39;s the bit-by-bit comparison. </div> <!-- Content — the <slot /> receives the page-specific markup --> <div class="prose max-w-none mb-20 text-text-secondary leading-relaxed space-y-6">   <section class="mb-16"> <h2 class="font-serif text-2xl mb-4">Every number is a useful lie</h2> <p class="mb-4">
+Your computer cannot store &pi;. It can't even store 0.1 exactly. What it stores is a
+        carefully constructed approximation — close enough you'd never notice in everyday code,
+        but technically wrong.
+</p> <p class="mb-4">
+That approximation follows <strong class="text-text">IEEE 754</strong>, standardised in 1985,
+        and it governs every <code class="text-text font-mono text-sm">float</code> and
+<code class="text-text font-mono text-sm">double</code> you've used. A 32-bit float splits
+        its 32 bits into three fixed regions:
+</p> <!-- IEEE 754 bit layout diagram for 1.0 --> <div class="my-8 rounded-lg border border-border bg-bg-subtle p-5"> <p class="text-xs text-text-tertiary mb-3 font-mono">float32 of 1.0 — fields are always the same width, for every number:</p> <div class="font-mono text-sm mb-4 overflow-x-auto"> <span class="text-blue-500 dark:text-blue-400">0</span><span class="text-amber-600 dark:text-amber-400">01111111</span><span class="text-emerald-600 dark:text-emerald-400">00000000000000000000000</span> </div> <div class="flex flex-wrap gap-4 text-xs text-text-secondary"> <span><span class="inline-block w-2.5 h-2.5 rounded-sm bg-blue-500 dark:bg-blue-400 mr-1 align-middle"></span>Sign (1 bit)</span> <span><span class="inline-block w-2.5 h-2.5 rounded-sm bg-amber-600 dark:bg-amber-400 mr-1 align-middle"></span>Exponent (8 bits, always fixed)</span> <span><span class="inline-block w-2.5 h-2.5 rounded-sm bg-emerald-600 dark:bg-emerald-400 mr-1 align-middle"></span>Mantissa (23 bits, always fixed)</span> </div> </div> <p class="mb-4">
+The sign bit is +/&minus;. The exponent (8 bits, biased by 127) sets the scale — the power of
+        2. The mantissa packs in significant digits. Full value:
+</p> <pre class="bg-bg-subtle rounded-lg border border-border p-4 font-mono text-sm mb-4 overflow-x-auto">(&minus;1)<sup>s</sup> &times; (1 + m/2<sup>23</sup>) &times; 2<sup>(exp&minus;127)</sup></pre> <p>
+The important detail: no matter what you're storing — 0.0001 or 10 billion — you always get
+        exactly 23 mantissa bits. Always. The exponent shifts the scale, but the precision budget
+        never moves.
+</p> </section>  <section class="mb-16"> <h2 class="font-serif text-2xl mb-4">The precision isn't where you need it</h2> <p class="mb-4">
+Most real computation clusters near 1.0. Neural network weights, physics simulations,
+        colour values — ordinary numbers. For those, 8 exponent bits is vast overkill. You're
+        covering 10<sup>&minus;38</sup> to 10<sup>38</sup> but spending a quarter of your bits on
+        a range you'll rarely touch.
+</p> <p class="mb-4">
+Imagine 32 coins to spend on "represent this number precisely." IEEE spends 1 on sign,
+        8 on scale, 23 on precision. That ratio is fixed. Forever. What if you could spend fewer
+        coins on scale when the scale doesn't need it — and give those coins to precision instead?
+</p> <p>
+That's the core idea of <strong class="text-text">posits</strong>.
+</p> </section>  <section class="mb-16"> <h2 class="font-serif text-2xl mb-4">Enter: posits</h2> <p class="mb-4">
+Posits were proposed by John Gustafson in 2017 (the same Gustafson behind Gustafson's Law).
+        The key change: instead of a fixed 8-bit exponent, posits replace it with a
+<strong class="text-text">regime</strong> — a self-terminating run of identical bits. The run
+        length encodes a coarse scale; shorter runs leave more room for precision.
+</p> <!-- Posit bit layout diagram for 1.0 --> <div class="my-8 rounded-lg border border-border bg-bg-subtle p-5"> <p class="text-xs text-text-tertiary mb-3 font-mono">posit32 of 1.0 — regime is only 2 bits here, leaving 27 for fraction:</p> <div class="font-mono text-sm mb-4 overflow-x-auto"> <span class="text-blue-500 dark:text-blue-400">0</span><span class="text-rose-500 dark:text-rose-400">10</span><span class="text-amber-600 dark:text-amber-400">00</span><span class="text-emerald-600 dark:text-emerald-400">000000000000000000000000000</span> </div> <div class="flex flex-wrap gap-4 text-xs text-text-secondary"> <span><span class="inline-block w-2.5 h-2.5 rounded-sm bg-blue-500 dark:bg-blue-400 mr-1 align-middle"></span>Sign (1 bit)</span> <span><span class="inline-block w-2.5 h-2.5 rounded-sm bg-rose-500 dark:bg-rose-400 mr-1 align-middle"></span>Regime (<em>variable length</em>)</span> <span><span class="inline-block w-2.5 h-2.5 rounded-sm bg-amber-600 dark:bg-amber-400 mr-1 align-middle"></span>Exponent (2 bits, fixed)</span> <span><span class="inline-block w-2.5 h-2.5 rounded-sm bg-emerald-600 dark:bg-emerald-400 mr-1 align-middle"></span>Fraction (<em>variable length</em>)</span> </div> </div> <p class="mb-4">
+A regime of <code class="text-text font-mono text-sm">10</code> means k&nbsp;=&nbsp;0.
+        A regime of <code class="text-text font-mono text-sm">1110</code> means k&nbsp;=&nbsp;2.
+        A regime of <code class="text-text font-mono text-sm">001</code> means k&nbsp;=&nbsp;&minus;2.
+        The value of k is raised to the "useed" — for es&nbsp;=&nbsp;2,
+        useed&nbsp;=&nbsp;2<sup>(2<sup>2</sup>)</sup>&nbsp;=&nbsp;16.
+</p> <pre class="bg-bg-subtle rounded-lg border border-border p-4 font-mono text-sm mb-6 overflow-x-auto">sign &times; 16<sup>k</sup> &times; 2<sup>exp</sup> &times; (1 + fraction)</pre> <p>
+For 1.0, k&nbsp;=&nbsp;0, regime takes just 2 bits. That leaves 27 bits for fraction vs.
+        IEEE's fixed 23 — about 1.2 extra decimal digits of precision. Push toward 10<sup>8</sup>
+and the regime grows to 9 bits, eating into fraction. The precision budget automatically
+        redistributes based on the number's magnitude.
+</p> </section>  <section class="mb-16"> <h2 class="font-serif text-3xl mb-6 pt-8 border-t border-border">Part I — IEEE 754: encoding 0.1 by hand</h2> <h3 class="font-serif text-xl mb-3">Step 1: Why 0.1 repeats in binary</h3> <p class="mb-4">
+To convert a decimal fraction to binary, you repeatedly multiply by 2 and take the integer
+        part. Here is the table for 0.1:
+</p> <div class="my-6 overflow-x-auto"> <table class="w-full text-sm border-collapse"> <thead> <tr class="border-b border-border text-left text-text-tertiary"> <th class="py-2 pr-4">Step</th><th class="py-2 pr-4">Value</th><th class="py-2 pr-4">&times; 2</th><th class="py-2">Bit</th> </tr> </thead> <tbody class="text-text-secondary font-mono"> <tr class="border-b border-border-light"><td class="py-1.5 pr-4">1</td><td class="pr-4">0.1</td><td class="pr-4">0.2</td><td>0</td></tr> <tr class="border-b border-border-light"><td class="py-1.5 pr-4">2</td><td class="pr-4">0.2</td><td class="pr-4">0.4</td><td>0</td></tr> <tr class="border-b border-border-light"><td class="py-1.5 pr-4">3</td><td class="pr-4">0.4</td><td class="pr-4">0.8</td><td>0</td></tr> <tr class="border-b border-border-light"><td class="py-1.5 pr-4">4</td><td class="pr-4">0.8</td><td class="pr-4">1.6</td><td class="text-text font-semibold">1</td></tr> <tr class="border-b border-border-light"><td class="py-1.5 pr-4">5</td><td class="pr-4">0.6</td><td class="pr-4">1.2</td><td class="text-text font-semibold">1</td></tr> <tr class="border-b border-border-light"><td class="py-1.5 pr-4">6</td><td class="pr-4">0.2</td><td class="pr-4">0.4</td><td>0</td></tr> <tr class="border-b border-border-light"><td class="py-1.5 pr-4">7</td><td class="pr-4">0.4</td><td class="pr-4">0.8</td><td>0</td></tr> <tr class="border-b border-border-light"><td class="py-1.5 pr-4">8</td><td class="pr-4">0.8</td><td class="pr-4">1.6</td><td class="text-text font-semibold">1</td></tr> <tr><td class="py-1.5 pr-4">…</td><td class="pr-4 text-text-tertiary">repeats from step 2</td><td></td><td class="text-text-tertiary">…</td></tr> </tbody> </table> </div> <p class="mb-4">
+0.1 in binary is <code class="text-text font-mono text-sm">0.0001100110011…</code> —
+        a repeating pattern of <code class="text-text font-mono text-sm">0011</code> that never
+        terminates. Just as 1/3 cannot be written exactly in decimal, 1/10 cannot be written exactly
+        in binary. This is the fundamental reason 0.1 can never be stored perfectly in any binary
+        floating-point format.
+</p> <h3 class="font-serif text-xl mb-3 mt-8">Step 2: Normalisation</h3> <p class="mb-4">
+IEEE 754 stores numbers in "scientific notation" form. We shift the binary point until we have
+        exactly one leading 1:
+</p> <pre class="bg-bg-subtle rounded-lg border border-border p-4 font-mono text-sm mb-4 overflow-x-auto">0.000<strong>1</strong>.10011001100110011… &times; 2<sup>0</sup>
+= <strong>1</strong>.10011001100110011… &times; 2<sup>&minus;4</sup></pre> <p class="mb-4">
+The leading 1 is implicit (not stored) — IEEE calls it the "hidden bit." So the mantissa
+        only needs to store the part after the binary point.
+</p> <h3 class="font-serif text-xl mb-3 mt-8">Step 3: Exponent bias</h3> <p class="mb-4">
+The true exponent is &minus;4. Float32 uses a bias of 127, so the stored exponent is:
+</p> <pre class="bg-bg-subtle rounded-lg border border-border p-4 font-mono text-sm mb-4 overflow-x-auto">&minus;4 + 127 = 123  →  01111011 in binary</pre> <h3 class="font-serif text-xl mb-3 mt-8">Step 4: The 23-bit mantissa and rounding</h3> <p class="mb-4">
+The repeating fraction <code class="text-text font-mono text-sm">10011001100110011…</code>
+must be truncated to 23 bits. Writing out the first 24+ bits:
+</p> <pre class="bg-bg-subtle rounded-lg border border-border p-4 font-mono text-sm mb-4 overflow-x-auto">1001 1001 1001 1001 1001 100<strong>|</strong>1 1001…
+                    23 bits ↑  guard bit = 1</pre> <p class="mb-4">
+The guard bit (bit 24) is 1 and there are more 1-bits after it, so IEEE "round to nearest
+        even" rounds up. The stored 23-bit mantissa becomes:
+</p> <pre class="bg-bg-subtle rounded-lg border border-border p-4 font-mono text-sm mb-6 overflow-x-auto">10011001100110011001101</pre> <h3 class="font-serif text-xl mb-3 mt-8">Step 5: Assemble the bits</h3> <div class="my-6 rounded-lg border border-border bg-bg-subtle p-5"> <p class="text-xs text-text-tertiary mb-3 font-mono">IEEE 754 float32 encoding of 0.1:</p> <div class="font-mono text-sm mb-4 overflow-x-auto"> <span class="text-blue-500 dark:text-blue-400">0</span><span class="text-amber-600 dark:text-amber-400">01111011</span><span class="text-emerald-600 dark:text-emerald-400">10011001100110011001101</span> </div> <div class="flex flex-wrap gap-x-6 gap-y-1 text-xs text-text-secondary"> <span>sign = 0 (positive)</span> <span>exp = 123 (= 2<sup>&minus;4</sup>)</span> <span>mantissa = 0xCCCCCD</span> </div> </div> <p class="mb-4">
+Decode it back: (1 + 0xCCCCCD / 2<sup>23</sup>) &times; 2<sup>&minus;4</sup> =
+</p> <pre class="bg-bg-subtle rounded-lg border border-border p-4 font-mono text-sm mb-4 overflow-x-auto">stored = 0.100000001490116119384765625
+error ≈ 1.49 &times; 10<sup>&minus;9</sup></pre> <p>
+That trailing <code class="text-text font-mono text-sm">...001490...</code> is the lie.
+        Close enough for everyday work. Technically wrong.
+</p> </section>  <section class="mb-16"> <h2 class="font-serif text-3xl mb-6 pt-8 border-t border-border">Part II — Posit32: encoding the same 0.1</h2> <h3 class="font-serif text-xl mb-3">Step 1: Where does 0.1 sit on the useed scale?</h3> <p class="mb-4">
+Posit32 with es&nbsp;=&nbsp;2 has useed&nbsp;=&nbsp;2<sup>4</sup>&nbsp;=&nbsp;16.
+        We need to find k such that useed<sup>k</sup> &le; 0.1 &lt; useed<sup>k+1</sup>:
+</p> <pre class="bg-bg-subtle rounded-lg border border-border p-4 font-mono text-sm mb-4 overflow-x-auto">16<sup>&minus;1</sup> = 0.0625     ← too small
+16<sup>0</sup>  = 1.0        ← too large
+
+0.0625 &le; 0.1 &lt; 1.0   →   k = &minus;1</pre> <h3 class="font-serif text-xl mb-3 mt-8">Step 2: Regime encoding</h3> <p class="mb-4">
+For k&nbsp;=&nbsp;&minus;1, the regime is a run of |k| zeros followed by a terminating 1.
+        That's just <code class="text-text font-mono text-sm">01</code> — only 2 bits.
+</p> <h3 class="font-serif text-xl mb-3 mt-8">Step 3: Strip to x<sub>s</sub> and extract the exponent</h3> <p class="mb-4">
+Divide out the regime's contribution to find what's left:
+</p> <pre class="bg-bg-subtle rounded-lg border border-border p-4 font-mono text-sm mb-4 overflow-x-auto">x<sub>s</sub> = 0.1 / 16<sup>&minus;1</sup> = 0.1 &times; 16 = 1.6</pre> <p class="mb-4">
+Now express 1.6 as 2<sup>e</sup>&nbsp;&times;&nbsp;(1&nbsp;+&nbsp;f). Since
+        1.0&nbsp;&le;&nbsp;1.6&nbsp;&lt;&nbsp;2.0, e&nbsp;=&nbsp;0.
+        The 2-bit exponent field is <code class="text-text font-mono text-sm">00</code>.
+</p> <h3 class="font-serif text-xl mb-3 mt-8">Step 4: Count the available fraction bits</h3> <p class="mb-4">
+32 total &minus; 1 sign &minus; 2 regime &minus; 2 exponent = <strong class="text-text">27 fraction bits</strong>.
+        IEEE had 23. That's 4 extra bits of precision — roughly one extra decimal digit.
+</p> <h3 class="font-serif text-xl mb-3 mt-8">Step 5: Extract the fraction</h3> <p class="mb-4">
+The fractional significand is 1.6, with hidden bit 1. So we need to encode 0.6 into 27 bits
+        using the same repeated-doubling trick:
+</p> <pre class="bg-bg-subtle rounded-lg border border-border p-4 font-mono text-sm mb-4 overflow-x-auto">0.6 in binary = 0.1001100110011001100110011<strong>00</strong>…
+27 fraction bits: 100110011001100110011001100</pre> <h3 class="font-serif text-xl mb-3 mt-8">Step 6: Assemble</h3> <div class="my-6 rounded-lg border border-border bg-bg-subtle p-5"> <p class="text-xs text-text-tertiary mb-3 font-mono">Posit32 (es=2) encoding of 0.1:</p> <div class="font-mono text-sm mb-4 overflow-x-auto"> <span class="text-blue-500 dark:text-blue-400">0</span><span class="text-rose-500 dark:text-rose-400">01</span><span class="text-amber-600 dark:text-amber-400">00</span><span class="text-emerald-600 dark:text-emerald-400">100110011001100110011001100</span> </div> <div class="flex flex-wrap gap-x-6 gap-y-1 text-xs text-text-secondary"> <span>sign = 0</span> <span>regime = 01 (k = &minus;1)</span> <span>exp = 00</span> <span>fraction = 27 bits</span> </div> </div> <pre class="bg-bg-subtle rounded-lg border border-border p-4 font-mono text-sm mb-4 overflow-x-auto">stored ≈ 0.09999999962747097
+error ≈ 3.7 &times; 10<sup>&minus;10</sup></pre> <p>
+That's about <strong class="text-text">4&times; more accurate</strong> than IEEE float32, from the
+        same 32 bits. The extra 4 fraction bits bought us an order of magnitude less error.
+</p> </section>  <section class="mb-16"> <h2 class="font-serif text-3xl mb-6 pt-8 border-t border-border">Part III — three numbers, three tradeoffs</h2> <p class="mb-6">
+Where does the posit advantage live, and where does it disappear? Let's compare three
+        numbers spanning different magnitudes:
+</p> <!-- Comparison 1: 1.3 --> <div class="mb-10"> <h3 class="font-serif text-xl mb-3">1.3 — the sweet spot</h3> <p class="mb-3">
+For 1.3, k&nbsp;=&nbsp;0 and the regime is just
+<code class="text-text font-mono text-sm">10</code> (2 bits). That leaves 27 fraction bits.
+          IEEE still has its fixed 23.
+</p> <div class="rounded-lg border border-border bg-bg-subtle p-4 text-sm font-mono space-y-1"> <p>IEEE:  23 fraction bits → error ≈ 5.96 &times; 10<sup>&minus;8</sup></p> <p>Posit: 27 fraction bits → error ≈ 3.73 &times; 10<sup>&minus;9</sup></p> <p class="text-emerald-600 dark:text-emerald-400 mt-2">Posit wins by ~4 bits of precision</p> </div> </div> <!-- Comparison 2: 100000 --> <div class="mb-10"> <h3 class="font-serif text-xl mb-3">100,000 — the crossover</h3> <p class="mb-3">
+100,000 &asymp; 16<sup>4</sup> &times; 2<sup>0</sup> &times; something, so k&nbsp;=&nbsp;4.
+          Regime becomes <code class="text-text font-mono text-sm">111110</code> — 6 bits. After sign
+          (1) + regime (6) + exponent (2), only 23 fraction bits remain. Same as IEEE.
+</p> <div class="rounded-lg border border-border bg-bg-subtle p-4 text-sm font-mono space-y-1"> <p>IEEE:  23 fraction bits</p> <p>Posit: 23 fraction bits</p> <p class="text-text-tertiary mt-2">Roughly tied</p> </div> </div> <!-- Comparison 3: 16^7 --> <div class="mb-10"> <h3 class="font-serif text-xl mb-3">16<sup>7</sup> &asymp; 268 million — the extreme</h3> <p class="mb-3">
+At k&nbsp;=&nbsp;7, the regime is
+<code class="text-text font-mono text-sm">111111110</code> — 9 bits. After sign + regime
+          + exponent, only 20 fraction bits are left. IEEE still has its full 23.
+</p> <div class="rounded-lg border border-border bg-bg-subtle p-4 text-sm font-mono space-y-1"> <p>IEEE:  23 fraction bits</p> <p>Posit: 20 fraction bits</p> <p class="text-rose-500 dark:text-rose-400 mt-2">Posit loses by ~3 bits — IEEE is more precise here</p> </div> </div> <p>
+This is the posit tradeoff made visible. Near 1.0, regime is tiny and precision overflows.
+        At extreme magnitudes, regime claims progressively more bits and precision tapers. The
+        system is designed around the assumption that most real computation lives in the middle
+        — and for ML weights, color values, physics constants, and financial calculations, it does.
+</p> </section>  <section class="mb-16"> <h2 class="font-serif text-3xl mb-4 pt-8 border-t border-border">Try it: see the bits change live</h2> <p class="mb-6 text-text-secondary">
+Type any positive number to watch both formats encode it. Notice the posit regime growing
+        as you push toward large or small values — and the fraction count shrinking to compensate.
+        The sweet spot for posits is near 1.0.
+</p> <!-- Widget container --> <div id="posit-widget" class="rounded-lg border border-border bg-bg-subtle"> <!-- Input bar --> <div class="p-5 border-b border-border"> <div class="flex items-center gap-3"> <label for="posit-input" class="text-sm text-text-secondary whitespace-nowrap">Value:</label> <input id="posit-input" type="text" value="0.1" class="flex-1 bg-bg border border-border rounded px-3 py-2 font-mono text-sm text-text focus:outline-none focus:border-text-tertiary transition-colors" autocomplete="off" spellcheck="false"> </div> <!-- Preset buttons --> <div class="flex flex-wrap gap-2 mt-3"> <button data-preset="0.1" class="posit-preset text-xs border border-border rounded-full px-2.5 py-0.5 text-text-tertiary hover:text-text hover:border-text-tertiary transition-colors cursor-pointer">0.1</button> <button data-preset="1.0" class="posit-preset text-xs border border-border rounded-full px-2.5 py-0.5 text-text-tertiary hover:text-text hover:border-text-tertiary transition-colors cursor-pointer">1.0</button> <button data-preset="1.3" class="posit-preset text-xs border border-border rounded-full px-2.5 py-0.5 text-text-tertiary hover:text-text hover:border-text-tertiary transition-colors cursor-pointer">1.3</button> <button data-preset="100000" class="posit-preset text-xs border border-border rounded-full px-2.5 py-0.5 text-text-tertiary hover:text-text hover:border-text-tertiary transition-colors cursor-pointer">100,000</button> <button data-preset="268435456" class="posit-preset text-xs border border-border rounded-full px-2.5 py-0.5 text-text-tertiary hover:text-text hover:border-text-tertiary transition-colors cursor-pointer">16⁷</button> <button data-preset="3.14159265" class="posit-preset text-xs border border-border rounded-full px-2.5 py-0.5 text-text-tertiary hover:text-text hover:border-text-tertiary transition-colors cursor-pointer">&pi;</button> </div> <p id="posit-status" class="text-xs text-text-tertiary mt-3"></p> </div> <!-- IEEE 754 card --> <div class="p-5 border-b border-border"> <h3 class="text-xs font-semibold tracking-wider text-text-tertiary uppercase mb-3">IEEE 754 float32</h3> <p class="text-xs text-text-tertiary mb-2 font-mono">1 + 8 + 23 = 32 bits (fields always fixed)</p> <div id="ieee-bits" class="font-mono text-sm mb-3 overflow-x-auto leading-relaxed"> <!-- filled by JS --> </div> <div id="ieee-fields" class="text-xs text-text-secondary font-mono mb-3"> <!-- filled by JS --> </div> <div class="space-y-0.5"> <p class="text-sm text-text-secondary">Stored value: <span id="ieee-stored" class="font-mono text-text"></span></p> <p class="text-sm text-text-secondary">Error: <span id="ieee-error" class="font-mono text-text"></span></p> </div> </div> <!-- Posit32 card --> <div class="p-5 border-b border-border"> <h3 class="text-xs font-semibold tracking-wider text-text-tertiary uppercase mb-3">Posit32 (es = 2)</h3> <p id="posit-field-sizes" class="text-xs text-text-tertiary mb-2 font-mono"> <!-- filled by JS: 1 + regime + 2 + fraction = 32 bits --> </p> <div id="posit-bits" class="font-mono text-sm mb-3 overflow-x-auto leading-relaxed"> <!-- filled by JS --> </div> <div id="posit-fields" class="text-xs text-text-secondary font-mono mb-3"> <!-- filled by JS --> </div> <div class="space-y-0.5"> <p class="text-sm text-text-secondary">Stored value: <span id="posit-stored" class="font-mono text-text"></span></p> <p class="text-sm text-text-secondary">Error: <span id="posit-error" class="font-mono text-text"></span></p> </div> </div> <!-- Comparison summary --> <div class="p-5"> <h3 class="text-xs font-semibold tracking-wider text-text-tertiary uppercase mb-3">Fraction bits available</h3> <div class="flex flex-col sm:flex-row sm:items-center gap-3 text-sm"> <span class="text-text-secondary">IEEE: <span id="ieee-frac-count" class="font-mono text-text">23</span> bits (always)</span> <span class="text-text-secondary">Posit: <span id="posit-frac-count" class="font-mono text-text"></span> bits</span> <span id="frac-delta" class="font-mono text-sm"></span> </div> </div> </div> </section>  <section class="mb-16"> <h2 class="font-serif text-2xl mb-4 pt-8 border-t border-border">Why they haven't taken over yet</h2> <p class="mb-4">
+Near 1.0, posits give roughly 4–5 extra fraction bits versus float32. For ML inference
+        — where most weights cluster near zero — that matters meaningfully. Some benchmarks show
+        posit32 matching float64 accuracy for dot products and accumulation-heavy ops.
+</p> <p class="mb-4">
+Posits also clean up the edge cases IEEE accumulated over decades: one zero, one NaR
+        (Not a Real) instead of two infinities and hundreds of distinct NaN bit patterns. No
+        negative zero. The number line is projective — it wraps from +&infin; to &minus;&infin;
+        through a single special value, symmetrically.
+</p> <p class="mb-4"> <strong class="text-text">The practical problem:</strong> every processor, GPU, and CUDA core
+        is built for IEEE 754. FPUs, SIMD units, math libraries, compilers, hardware intrinsics —
+        all of it assumes float32 or float64. Posit hardware exists in research FPGAs and a handful
+        of startup chips, but there's no mainstream CPU support. Swapping a number format used in
+        billions of devices is not a software update.
+</p> <p class="mb-4">
+Posits aren't uniformly better either. At extreme magnitudes — 10<sup>&minus;38</sup> or
+        10<sup>38</sup> — the long regime eats into fraction bits, and IEEE is actually more precise
+        there. The tapered precision is a feature for typical computation and a deliberate tradeoff
+        at the edges. If you need full dynamic range, IEEE's fixed fields work in your favour.
+</p> <p>
+Whether posits eventually displace IEEE 754 is an open question that will likely be answered
+        by whoever puts them in a mainstream ML accelerator first. But as a piece of numerical
+        design — a variable-length field that automatically trades range for precision based on
+        magnitude — the idea is elegantly constructed. The bits know what they're worth.
+</p> </section>  <section> <div class="pt-8 border-t border-border text-sm text-text-tertiary"> <p>
+The interactive widget on this page runs the
+<a href="https://gitlab.com/cerlane/SoftPosit" target="_blank" rel="noopener noreferrer" class="text-text-secondary hover:text-text transition-colors link-underline">SoftPosit</a> C library by Cerlane Leong, compiled to WebAssembly.
+          SoftPosit is a complete software implementation of posit arithmetic —
+<a href="https://gitlab.com/cerlane/SoftPosit#cppversion" target="_blank" rel="noopener noreferrer" class="text-text-secondary hover:text-text transition-colors link-underline">source and C++ API on GitLab</a>.
+</p> </div> </section>  </div> <!-- Bottom navigation --> <div class="pt-8 border-t border-border flex items-center justify-between text-sm"> <a href="/" class="link-underline text-text-secondary hover:text-text transition-colors">
+&larr; All posts
+</a> </div> </article>  </main> <footer class="py-10 border-t border-border"> <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 text-sm text-text-tertiary"> <!-- Links --> <div class="flex gap-5"> <a href="https://github.com/deep0ctave" target="_blank" rel="noopener noreferrer" class="hover:text-text transition-colors">
+GitHub
+</a> <a href="https://www.linkedin.com/in/avinash-aldhapati/" target="_blank" rel="noopener noreferrer" class="hover:text-text transition-colors">
+LinkedIn
+</a> <a href="https://avinashaldhapati.com" class="hover:text-text transition-colors">
+Portfolio
+</a> </div> <!-- Copyright --> <p>&copy; 2026 Avinash Aldhapati</p> </div> </footer> </div> </body></html> <!-- ══════════════════════════════════════════════════════════════════════════
+     WASM WIDGET SCRIPT
+     Loads the SoftPosit WASM module and drives the interactive comparison
+     widget. IEEE 754 decoding is done in pure JS (DataView). Posit encoding
+     uses the SoftPosit C library compiled to WebAssembly. Posit field
+     decomposition (sign/regime/exponent/fraction) is done in JS from the
+     raw 32-bit posit representation.
+     ══════════════════════════════════════════════════════════════════════════ --> <script type="module" src="/_astro/posit_number_format.astro_astro_type_script_index_0_lang.Xv9w-15P.js"></script>
